@@ -1,4 +1,4 @@
-// BUDGET CONTROLLER
+// BUDGET CONTROLLER /////////////////////////////////////////
 var budgetController = (function() {
 
 	// Some Code
@@ -8,10 +8,7 @@ var budgetController = (function() {
 
 
 
-
-
-
-//UI CONTROLLER
+//UI CONTROLLER ////////////////////////////////////////////
 var UIController = (function(){
 
 	var DOMstrings = {
@@ -42,29 +39,40 @@ var UIController = (function(){
 
 
 
-
-
-// GLOBAL APP CONTROLLER
+// GLOBAL APP CONTROLLER /////////////////////////////////////
 var controller = (function(budgetCtrl, UICtrl){
 
-	var DOM = UICtrl.getDOMstrings();
+	var setupEventListeners = function() {
+		
+		var DOM = UICtrl.getDOMstrings();
+
+		document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItems);
+
+		document.addEventListener('keypress', function(event) {
+			if (event.keycode === 13 || event.which === 13) {
+				ctrlAddItems();
+			}
+		});
+	};
+
+	
 
 	var ctrlAddItems = function() {
 
 		//1. Get the field input data
 		var input = UICtrl.getinput();
-		console.log(input);
 
 
-	}
+	};
 
-
-	document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItems);
-
-	document.addEventListener('keypress', function(event) {
-		if (event.keycode === 13 || event.which === 13) {
-			ctrlAddItems();
+	return {
+		init: function() {
+			console.log('Application has started.');
+			setupEventListeners();
 		}
-	});
+	};
+	
 
 })(budgetController, UIController);
+
+controller.init();
